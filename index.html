@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>Mouse Share</title>
+	<style>
+			.pointer{
+			position: absolute;
+			width:10px;
+			height:10px;			
+
+		   }
+	</style>
+<body>	
+<body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+	var socket = io();
+	//this object keeps track of cursors on the screen
+	var onscreen={};
+	if(window.jQuery)
+	{
+		console.log("Jquery is loaded");
+	}
+	else
+	{
+		console.log("Jquery failed to load"); 
+	}	
+
+	var last_x=0, last_y=0;
+
+
+	//if mouse is moving , taken from SO
+	$(function() {
+    var leftButtonDown = false;
+    $(document).mousedown(function(e){
+        // Left mouse button was pressed, set flag
+        if(e.which === 1) leftButtonDown = true;
+    });
+    $(document).mouseup(function(e){
+        // Left mouse button was released, clear flag
+        if(e.which === 1) leftButtonDown = false;
+    });
+    
+    function tweakMouseMoveEvent(e){
+        // If left button is not set, set which to 0
+        // This indicates no buttons pressed
+        if(e.which === 1 && !leftButtonDown) e.which = 0;
+    }
+
+    $(document).mousemove(function(e) {
+        tweakMouseMoveEvent(e);
+        	//$('body').text('which: '+e.pageX+" " + e.which);
+        	console.log("Mouse moved");
+        	socket.emit("mousepos",{x:e.pageX,y:e.pageY,isclick:e.which});
+        	last_x=e.pageX;
+        	last_y=e.pageY;
+
+    	});
+	});
+
+	//if mouse is not moving
+	$(document).mousedown(function(){
+		socket.emit("mousepos",{x:last_x,y:last_y,isclick:1});
+	});
+
+	
+	socket.on("all_mouses",function(data){
+		if(!onscreen[data.id])
+		{
+			onscreen[data.id]=true;
+			$("body").append('<div class="pointer" session="'+data.id+'" </div>');		
+		}
+		$('.pointer[session='+data.id+']').css("left",data.pos.x);
+		$('.pointer[session='+data.id+']').css("top",data.pos.y);
+		if(data.isclick == 1)
+		$('.pointer[session='+data.id+']').css("background-color","rgb(0,0,0)");
+		else
+		$('.pointer[session='+data.id+']').css("background-color","rgb("+data.thiscolor.r+","+data.thiscolor.g+","+data.thiscolor.b+")");
+
+	});
+</script>
