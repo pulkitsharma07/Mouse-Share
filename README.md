@@ -1,7 +1,7 @@
 Mouse-Share
 ===========
 
-This nodejs app allows to share multiple mouse cursors across different users/screens in real time .
+This nodejs app allows sharing multiple mouse cursors across different users/screens in real time .
 
 Features
 ========
