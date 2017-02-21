@@ -1,8 +1,16 @@
-language: python
+language: node_js
+sudo: false
+node_js:
+  - 0.10
 
+before_script:
+  - npm install -g bower
+  - bower install
+env:
+  - SAUCE_USERNAME=platanus
+
+  
 addons:
+  sauce_connect: true
   jwt:
-    -   secure: rExM4NCzfdHx/O5M6S5eWjqI6kfZxXU+Ywm/Rer+O//0Q6ixyZUYBFl3DFy/W3YzjVcmvuELBSFyDa7FXHCPkJO9PjY6BYPYgHdmmEn4Gd5mcFJmyr1TEZmJuC/wLUBKh9jmk336xgVKCVLW9BMNKzvuztgzmz7u8S6y+dEHzThmDDy9meIHsZAeLfsbvo3PxPcReZK/2xFLLvXIGDOgvgIoCP//X0XKEMoSyIWk65zD0IZwyZqH9KS9q/IkrHd1IO39e9gBOXDDozLGyNbu5QDZ1MlJWqTUInA7XwPkonMgxyTkvQ5Vpo5OiUtvIdB/qB8ImoZKq4O/pVNDo9RbT6+IgjUt7Wuu4MeE9O0g7HYSi2m6OrCFFRUq7umuB2gFRHireD1dz6EDftADUUfNF8pKGWIlmCQHrv9jIJXIgLrOQ2CdqU7AQWNwkvHMXUSttavmO/5GUsDW1wVIt2w8ocThfO7pM3IzUOkBTTNHNwAB0XNK8HBshB3rZzVUAOnw9hM8u7DTee6ylewHMEKAKJiT4Ye+9ygBsL5jEKAfBwxdvu8MjTkTY+8d3b/JFjPwNC1C3n+CXn4uefk30Te/Iy3Ws+zt0fO/m0gDHXYHMbZNJNTMEmbwurTHUAQ8krGaXYeo5BHKg/Yvfx2+N7+OXeJyYjWH22gsP7dtUIipWU8=
-
-script:
-  -   echo $SAUCE_ACCESS_KEY
+    secure: TP3CGUxfYyL1VpRNuze5Y799AGZeXgbImeSLM00k+MseapUEqX56PfSA8HUSfAvhxPghr4o7NfouqEvihSBD5VoSySERfM2KNuFbFLDe4t1nJA7iYzs4ztF7oXESldjSbDDAUAS0sqOEG5q+LA/ZgHzvEBHz8YiiG4/ixNlCw/M=
